@@ -1,0 +1,2 @@
+0001-fix-win32-linker.patch
+0010-build-Use-automake-primitives-to-install-libksba.def.patch
