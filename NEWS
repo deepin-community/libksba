@@ -1,3 +1,54 @@
+Noteworthy changes in version 1.6.6 (2024-02-23) [C22/A14/R6]
+------------------------------------------------
+
+ * Fix a possible wrong error return from the DER builder.  [T6992]
+
+ Release-info: https://dev.gnupg.org/T7009
+
+
+Noteworthy changes in version 1.6.5 (2023-11-16) [C22/A14/R5]
+------------------------------------------------
+
+ * Add Brainpool curve detection using parameters with compressed base
+   point.  [rKeb23f853f178]
+
+ * New configure option --with-libtool-modification.  [T6619]
+
+ Release-info: https://dev.gnupg.org/T6822
+
+
+Noteworthy changes in version 1.6.4 (2023-06-19) [C22/A14/R4]
+------------------------------------------------
+
+ * Correctly detect CMS write errors.  [rK9ced7706f2]
+
+ Release-info: https://dev.gnupg.org/T6543
+
+
+Noteworthy changes in version 1.6.3 (2022-12-06) [C22/A14/R3]
+------------------------------------------------
+
+ * Fix another integer overflow in the CRL parser.  [T6284]
+
+ Release-info: https://dev.gnupg.org/T6304
+
+
+Noteworthy changes in version 1.6.2 (2022-10-07) [C22/A14/R2]
+------------------------------------------------
+
+ * Fix integer overflow in the CRL parser.  [rK4b7d9cd4a0]
+
+ Release-info: https://dev.gnupg.org/T6230
+
+
+Noteworthy changes in version 1.6.1 (2022-09-16) [C22/A14/R1]
+------------------------------------------------
+
+ * Allow an OCSP server not to return the sent nonce.  [rK24992a4a7a]
+
+ Release-info: https://dev.gnupg.org/T6210
+
+
 Noteworthy changes in version 1.6.0 (2021-06-10) [C22/A14/R0]
 ------------------------------------------------
 

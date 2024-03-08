@@ -18,7 +18,7 @@
 # along with this program; if not, see <http://www.gnu.org/licenses/>.
 
 # Process this file with autoconf to produce a configure script.
-AC_PREREQ([2.61])
+AC_PREREQ([2.69])
 min_automake_version="1.14"
 
 
@@ -30,7 +30,7 @@ min_automake_version="1.14"
 m4_define([mym4_package],[libksba])
 m4_define([mym4_major], [1])
 m4_define([mym4_minor], [6])
-m4_define([mym4_micro], [0])
+m4_define([mym4_micro], [6])
 
 # Below is m4 magic to extract and compute the git revision number,
 # the decimalized short revision number, a beta version string and a
@@ -52,7 +52,7 @@ AC_INIT([mym4_package],[mym4_version],[https://bugs.gnupg.org])
 # Please remember to document interface changes in the NEWS file.
 LIBKSBA_LT_CURRENT=22
 LIBKSBA_LT_AGE=14
-LIBKSBA_LT_REVISION=0
+LIBKSBA_LT_REVISION=6
 #-------------------
 # If the API is changed in an incompatible way: increment the next counter.
 KSBA_CONFIG_API_VERSION=1
@@ -112,6 +112,8 @@ LT_LANG([Windows Resource])
 
 AM_MAINTAINER_MODE
 
+# We need to compile and run a program on the build machine.
+AX_CC_FOR_BUILD
 
 AC_SUBST(LIBKSBA_LT_CURRENT)
 AC_SUBST(LIBKSBA_LT_AGE)
@@ -265,12 +267,8 @@ case "${host}" in
 esac
 if test "$have_w32_system" = yes; then
    AC_DEFINE(HAVE_W32_SYSTEM,1, [Defined if we run on a W32 API based system])
-   if test "$have_w32ce_system" = yes; then
-     AC_DEFINE(HAVE_W32CE_SYSTEM,1,[Defined if we run on WindowsCE])
-   fi
 fi
 AM_CONDITIONAL(HAVE_W32_SYSTEM, test "$have_w32_system" = yes)
-AM_CONDITIONAL(HAVE_W32CE_SYSTEM, test "$have_w32ce_system" = yes)
 
 
 # For some systems we know that we have ld_version scripts.
@@ -292,6 +290,43 @@ AC_ARG_ENABLE([ld-version-script],
               [ : ] )
 AM_CONDITIONAL(HAVE_LD_VERSION_SCRIPT, test "$have_ld_version_script" = "yes")
 
+#
+# Specify how we support our local modification of libtool for Windows
+# 64-bit.  Options are:
+#
+# (1) apply: when appying patch fails, it results failure of entire build
+# (2) never: never apply the patch (no try)
+# (3) try: use patched if it goes well, use original if fails
+#
+AC_ARG_WITH([libtool-modification],
+  AS_HELP_STRING([--with-libtool-modification=apply|never|try],
+                 [how to handle libtool modification (default=never)]),
+                 build_libtool_modification=$withval,
+                 build_libtool_modification=never)
+
+#
+# Apply a patch (locally maintained one of ours) to libtool
+#
+case $host in
+  x86_64-*mingw32*)
+AC_CONFIG_COMMANDS([libtool-patch],[[
+  if test "$build_selection" = never; then
+    echo "patch not applied"
+  elif (mv -f libtool libtool.orig; \
+        sed -f $srcdir/build-aux/libtool-patch.sed libtool.orig >libtool); then
+    echo "applied successfully"
+  elif test "$build_selection" = try; then
+    mv -f libtool.orig libtool
+    echo "patch failed, thus, using original"
+  else
+    echo "patch failed"
+    as_fn_exit 1
+  fi
+]],[build_selection=$build_libtool_modification])
+  ;;
+  *)
+  ;;
+esac
 
 #
 # Check for ELF visibility support.
@@ -389,10 +424,10 @@ fi
 AC_DEFINE(GPG_ERR_SOURCE_DEFAULT, GPG_ERR_SOURCE_KSBA,
           [The default error source for libksba.])
 
+AM_CONDITIONAL(USE_GPGRT_CONFIG, [test -n "$GPGRT_CONFIG" \
+                                  -a "$ac_cv_path_GPG_ERROR_CONFIG" = no])
 
 # Checks for header files.
-AC_HEADER_STDC
-AC_CHECK_HEADERS([string.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -405,7 +440,7 @@ AC_CHECK_TYPES([u32])
 
 
 # Checks for library functions.
-AC_CHECK_FUNCS([memmove strchr strtol strtoul stpcpy gmtime_r getenv])
+AC_CHECK_FUNCS([stpcpy gmtime_r getenv])
 
 
 # GNUlib checks
