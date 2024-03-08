@@ -1,4 +1,4 @@
-This is ksba.info, produced by makeinfo version 6.5 from ksba.texi.
+This is ksba.info, produced by makeinfo version 6.8 from ksba.texi.
 
 INFO-DIR-SECTION GNU libraries
 START-INFO-DIR-ENTRY
@@ -8,8 +8,8 @@ END-INFO-DIR-ENTRY
 This file documents the KSBA library to access X.509 and CMS data
 structures.
 
-   This is edition 1.6.0, last updated 12 May 2020, of 'The KSBA
-Reference Manual', for Version 1.6.0.
+   This is edition 1.6.6, last updated 22 November 2023, of 'The KSBA
+Reference Manual', for Version 1.6.6.
 
    Copyright (C) 2002, 2003, 2004 g10 Code GmbH
 
@@ -25,8 +25,8 @@ File: ksba.info,  Node: Top,  Next: Introduction,  Up: (dir)
 Main Menu
 *********
 
-This is edition 1.6.0, last updated 12 May 2020, of 'The KSBA Reference
-Manual', for Version 1.6.0 of the KSBA library.
+This is edition 1.6.6, last updated 22 November 2023, of 'The KSBA
+Reference Manual', for Version 1.6.6 of the KSBA library.
 
    Copyright (C) 2002, 2003, 2004 g10 Code GmbH
 
@@ -228,33 +228,34 @@ which the header file is located to the compiler's include file search
 path (via the '-I' option).
 
    However, the path to the include file is determined at the time the
-source is configured.  To solve this problem, 'KSBA' ships with a small
-helper program 'ksba-config' that knows about the path to the include
-file and other configuration options.  The options that need to be added
-to the compiler invocation at compile time are output by the '--cflags'
-option of 'ksba-config'.  The following example shows how it can be used
-at the command line:
+source is configured.  To solve this problem, 'KSBA' ships with
+'ksba.pc' file, that knows about the path to the include file and other
+configuration options.  The options that need to be added to the
+compiler invocation at compile time are output by the '--cflags' option
+of 'pkg-config ksba'.  The following example shows how it can be used at
+the command line:
 
-     gcc -c foo.c `ksba-config --cflags`
+     gcc -c foo.c `pkg-config --cflags ksba`
 
-   Adding the output of 'ksba-config --cflags' to the compiler's command
-line will ensure that the compiler can find the 'ksba.h' header file.
+   Adding the output of 'pkg-config --cflags ksba' to the compiler's
+command line will ensure that the compiler can find the 'ksba.h' header
+file.
 
    A similar problem occurs when linking the program with the library.
 Again, the compiler has to find the library files.  For this to work,
 the path to the library files has to be added to the library search path
-(via the '-L' option).  For this, the option '--libs' of 'ksba-config'
-can be used.  For convenience, this option also outputs all other
+(via the '-L' option).  For this, the option '--libs' of 'pkg-config
+ksba' can be used.  For convenience, this option also outputs all other
 options that are required to link the program with the 'KSBA' libraries
 (in particular, the '-lksba' option).  The example shows how to link
 'foo.o' with the 'KSBA' libraries to a program 'foo'.
 
-     gcc -o foo foo.o `ksba-config --libs`
+     gcc -o foo foo.o `pkg-config --libs ksba`
 
    Of course you can also combine both examples to a single command by
-specifying both options to 'ksba-config':
+specifying both options to 'pkg-config ksba':
 
-     gcc -o foo foo.c `ksba-config --cflags --libs`
+     gcc -o foo foo.c `pkg-config --cflags --libs ksba`
 
 
 File: ksba.info,  Node: Certificate Handling,  Next: CMS,  Prev: Preparation,  Up: Top
@@ -317,7 +318,7 @@ copy it and eventually destroy it.
      Read the next certificate from the READER object and store it in
      the certificate object CERT for future access.  The certificate is
      parsed and rejected if it has any syntactical or semantical error
-     (i.e.  does not match the ASN.1 description).
+     (i.e., does not match the ASN.1 description).
 
      The function returns '0' if the operation was successfully
      performed.  An error code is returned on failure.
@@ -466,7 +467,7 @@ certificate object has not yet been initialized by means of
      represent any time since the year 0.
 
      It is implemented as a buffer of 16 bytes and may be handled like a
-     standard string.  It should be initialized to zero (i.e.  the first
+     standard string.  It should be initialized to zero (i.e., the first
      byte needs to be 0x00) if it does not hold a valid date.  Date
      values themselves are stored in ISO format and assumed to be
      referenced from UTC. The string with the date value is always
@@ -498,7 +499,7 @@ certificate object has not yet been initialized by means of
           (ksba_cert_t CERT, int WHAT, ksba_isotime_t TIMEBUF)
 
      Return the validity dates from the certificate.  If no value is
-     available an empty date object (i.e.  a 'strlen' will be stored at
+     available an empty date object (i.e., a 'strlen' will be stored at
      TIMEBUF, otherwise it will receive the date.  On failure an error
      code is returned.
 
@@ -668,7 +669,7 @@ mechanism for this by means of two functions:
      will be replaced by the new data.  Using 'NULL' for DATA will
      effectively delete the data.
 
-     On error (i.e.  out of memory) an already existing data object
+     On error (i.e., out of memory) an already existing data object
      stored under KEY may get deleted.
 
      *Caution:* This function is definitely not thread safe because we
@@ -766,7 +767,7 @@ KSBA includes a versatile CMS parser for encryption (enveloped data) and
 digital signing.  The parser is capable of handling arbitrary amounts of
 data without requiring much memory.  Well, certain objects are build in
 memory because it can be assumed that those objects are limited in size;
-e.g.  it does not make sense to use a video clip as the DN despite the
+e.g., it does not make sense to use a video clip as the DN despite the
 fact that the standard does not forbid it.
 
  -- Function: gpg_error_t ksba_cms_parse
@@ -1019,7 +1020,7 @@ have to do it like this:
        if (gpg_err_code (err) == GPG_ERR_EOF)
          okay = 1;
 
-   The only exception is that success (i.e.  no error) is defined to be
+   The only exception is that success (i.e., no error) is defined to be
 '0'; thus you may directly test for success like:
 
        if (!ksba_foo ())
@@ -1050,7 +1051,7 @@ UID            userid               0.9.2342.19200300.100.1.1
 representation; components not listed in this table will be represented
 by their OID.
 
-   For the other direction, i.e.  creating a DN from the string
+   For the other direction, i.e., creating a DN from the string
 representation, KSBA recognizes the following extra labels:
 
 Label          Component            OID
@@ -1796,46 +1797,46 @@ Function and Data Index
 * Menu:
 
 * ksba_cert_get_authority_info_access:   Retrieving attributes.
-                                                              (line 279)
+                                                              (line 277)
 * ksba_cert_get_auth_key_id:             Retrieving attributes.
-                                                              (line 270)
+                                                              (line 268)
 * ksba_cert_get_cert_policies:           Retrieving attributes.
-                                                              (line 232)
+                                                              (line 230)
 * ksba_cert_get_crl_dist_point:          Retrieving attributes.
-                                                              (line 242)
+                                                              (line 240)
 * ksba_cert_get_digest_algo:             Retrieving attributes.
-                                                              (line  41)
+                                                              (line  39)
 * ksba_cert_get_extension:               Retrieving attributes.
-                                                              (line 180)
+                                                              (line 178)
 * ksba_cert_get_ext_key_usages:          Retrieving attributes.
-                                                              (line 226)
+                                                              (line 224)
 * ksba_cert_get_image:                   Retrieving attributes.
                                                               (line  11)
 * ksba_cert_get_issuer:                  Retrieving attributes.
-                                                              (line  73)
+                                                              (line  71)
 * ksba_cert_get_key_usage:               Retrieving attributes.
-                                                              (line 193)
+                                                              (line 191)
 * ksba_cert_get_public_key:              Retrieving attributes.
-                                                              (line 172)
+                                                              (line 170)
 * ksba_cert_get_serial:                  Retrieving attributes.
-                                                              (line  66)
+                                                              (line  64)
 * ksba_cert_get_sig_val:                 Retrieving attributes.
-                                                              (line 176)
+                                                              (line 174)
 * ksba_cert_get_subject:                 Retrieving attributes.
-                                                              (line 100)
+                                                              (line  98)
 * ksba_cert_get_subject_info_access:     Retrieving attributes.
-                                                              (line 293)
+                                                              (line 291)
 * ksba_cert_get_subj_key_id:             Retrieving attributes.
-                                                              (line 261)
+                                                              (line 259)
 * ksba_cert_get_user_data:               User data.           (line  26)
 * ksba_cert_get_validity:                Retrieving attributes.
-                                                              (line 161)
+                                                              (line 159)
 * ksba_cert_hash:                        Retrieving attributes.
-                                                              (line  25)
+                                                              (line  24)
 * ksba_cert_init_from_mem:               Creating certificates.
                                                               (line  41)
 * ksba_cert_is_ca:                       Retrieving attributes.
-                                                              (line 185)
+                                                              (line 183)
 * ksba_cert_new:                         Creating certificates.
                                                               (line   9)
 * ksba_cert_read_der:                    Creating certificates.
@@ -1858,7 +1859,7 @@ Function and Data Index
 * ksba_content_t:                        CMS Parser.          (line  61)
 * ksba_dn_teststr:                       DNs.                 (line   9)
 * ksba_isotime_t:                        Retrieving attributes.
-                                                              (line 125)
+                                                              (line 123)
 * ksba_name_enum:                        Names.               (line  17)
 * ksba_name_get_uri:                     Names.               (line  36)
 * ksba_name_release:                     Names.               (line  13)
@@ -1870,33 +1871,38 @@ Function and Data Index
 
 
 Tag Table:
-Node: Top738
-Node: Introduction2768
-Node: Getting Started3046
-Node: Features3912
-Node: Overview5003
-Node: Preparation5252
-Node: Header5735
-Node: Version Check6331
-Node: Building the source7423
-Node: Certificate Handling9267
-Node: Creating certificates10248
-Node: Retrieving attributes12709
-Node: Setting attributes26927
-Node: User data27192
-Node: CMS29112
-Node: CMS Basics29571
-Node: CMS Parser31634
-Node: CRLs35612
-Node: PKCS1035895
-Node: Utilities36156
-Node: Names36560
-Node: OIDs38872
-Node: DNs39076
-Node: Error Handling40207
-Node: Component Labels41562
-Node: Copying43125
-Node: Concept Index80652
-Node: Function and Data Index80780
+Node: Top743
+Node: Introduction2778
+Node: Getting Started3056
+Node: Features3922
+Node: Overview5013
+Node: Preparation5262
+Node: Header5745
+Node: Version Check6341
+Node: Building the source7433
+Node: Certificate Handling9284
+Node: Creating certificates10265
+Node: Retrieving attributes12726
+Node: Setting attributes26944
+Node: User data27209
+Node: CMS29129
+Node: CMS Basics29588
+Node: CMS Parser31651
+Node: CRLs35629
+Node: PKCS1035912
+Node: Utilities36173
+Node: Names36577
+Node: OIDs38889
+Node: DNs39093
+Node: Error Handling40224
+Node: Component Labels41579
+Node: Copying43142
+Node: Concept Index80669
+Node: Function and Data Index80797
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

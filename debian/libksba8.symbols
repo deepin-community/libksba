@@ -1,7 +1,7 @@
 libksba.so.8 libksba8 #MINVER#
 * Build-Depends-Package: libksba-dev
  KSBA_0.9@KSBA_0.9 1.2.0
- (regex|optional)"@KSBA_PRIVATE_TESTS$" 1.5.1-0+private+1
+ (regex|optional)"@KSBA_PRIVATE_TESTS$" 1.6.2-0+private+1
  ksba_asn_create_tree@KSBA_0.9 1.2.0
  ksba_asn_delete_structure@KSBA_0.9 1.2.0
  ksba_asn_parse_file@KSBA_0.9 1.2.0
