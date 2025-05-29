@@ -1,3 +1,9 @@
+libksba (1.6.6-1deepin1) unstable; urgency=medium
+
+  * feat: add sw64 support.
+
+ -- hudeng <hudeng@deepin.org>  Thu, 29 May 2025 18:07:01 +0800
+
 libksba (1.6.6-1) unstable; urgency=medium
 
   * New upstream version.
