@@ -1,3 +1,52 @@
+2024-06-21  Werner Koch  <wk@gnupg.org>
+
+	Release 1.6.7.
+	+ commit b14e68b97df754b2bb7a90bb904d143d8e896afb
+
+
+	Allow for an empty Subject in certs.
+	+ commit f2e2f320c9de969e4e29861788ba590a03a0f4d8
+	* src/ber-decoder.c (match_der): Add hack for an empty subject.
+
+2024-06-14  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Update gpg-error.m4.
+	+ commit f43a21b2c53ed0a95a5ad6572549eaa4123146f5
+
+
+2024-06-13  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Apply spell fixes from GnuPG.
+	+ commit 364e67effbf47c58550c3e3eda13d783fd25ffc0
+	* src/ksba.m4: Fix from GnuPG.
+
+	m4: Update gpg-error.m4 from gpg-error master.
+	+ commit f63a9c36505210fb5696849b13170020c0f2752f
+	* m4/gpg-error.m4: Update.
+	* m4/libgcrypt.m4: Remove, we don't use libgcrypt.
+
+	ksba.m4: Fix setting/using GPG_ERROR_CONFIG.
+	+ commit 95dda84002f6e23f2770cdf63921f0bac1459d76
+	ksba.m4 (_AM_PATH_GPGRT_CONFIG): Don't set GPG_ERROR_CONFIG and
+	gpg_error_config_version.
+
+2024-05-14  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Fix the previous commit.
+	+ commit b02b0bea7d62a352a21678a247bcb20b5a9fbf39
+
+
+	m4: Include _AM_PATH_GPGRT_CONFIG definition.
+	+ commit c910b8b136b89b134632ce1f317d856790b93fd3
+	* src/ksba.m4: Find gpgrt-config.
+
+2024-05-08  NIIBE Yutaka  <gniibe@fsij.org>
+
+	Use unsigned int for 1-bit flags.
+	+ commit a7aab2553d316eaa484e76167151157d7923a60d
+	* src/asn1-func.h (struct node_flag_s): Use unsigned int for
+	bit fields.
+
 2024-02-23  Werner Koch  <wk@gnupg.org>
 
 	Release 1.6.6.
