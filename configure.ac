@@ -30,7 +30,7 @@ min_automake_version="1.14"
 m4_define([mym4_package],[libksba])
 m4_define([mym4_major], [1])
 m4_define([mym4_minor], [6])
-m4_define([mym4_micro], [6])
+m4_define([mym4_micro], [7])
 
 # Below is m4 magic to extract and compute the git revision number,
 # the decimalized short revision number, a beta version string and a
@@ -52,7 +52,7 @@ AC_INIT([mym4_package],[mym4_version],[https://bugs.gnupg.org])
 # Please remember to document interface changes in the NEWS file.
 LIBKSBA_LT_CURRENT=22
 LIBKSBA_LT_AGE=14
-LIBKSBA_LT_REVISION=6
+LIBKSBA_LT_REVISION=7
 #-------------------
 # If the API is changed in an incompatible way: increment the next counter.
 KSBA_CONFIG_API_VERSION=1
@@ -70,6 +70,7 @@ AC_CANONICAL_HOST
 AB_INIT
 
 AC_USE_SYSTEM_EXTENSIONS
+AC_ARG_VAR(SYSROOT,[locate config scripts also below that directory])
 
 # Taken from mpfr-4.0.1, then modified for LDADD_FOR_TESTS_KLUDGE
 dnl Under Linux, make sure that the old dtags are used if LD_LIBRARY_PATH
@@ -161,16 +162,6 @@ gl_EARLY
 #AC_ARG_PROGRAM
 AC_PROG_YACC
 AX_PROG_BISON([have_bison=yes],[have_bison=no])
-
-if test "$USE_MAINTAINER_MODE" = "yes"; then
-	AC_CHECK_PROGS(GCOV, [gcov], gcov)
-	# gcov coverage reporting
-	AC_TDD_GCOV
-	AC_SUBST(COVERAGE_CFLAGS)
-	AC_SUBST(COVERAGE_LDFLAGS)
-else
-	AM_CONDITIONAL(HAVE_GCOV, false)
-fi
 
 AC_C_INLINE
 

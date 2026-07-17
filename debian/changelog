@@ -1,8 +1,16 @@
-libksba (1.6.6-1deepin1) unstable; urgency=medium
+libksba (1.6.7-2) unstable; urgency=low
 
-  * feat: add sw64 support.
+  * Upload to unstable.
 
- -- hudeng <hudeng@deepin.org>  Thu, 29 May 2025 18:07:01 +0800
+ -- Andreas Metzler <ametzler@debian.org>  Mon, 01 Jul 2024 18:33:40 +0200
+
+libksba (1.6.7-1) experimental; urgency=medium
+
+  * New upstream version.
+    + Unfuzz 25_norevisionfromgit.diff.
+    + Update copyright info.
+
+ -- Andreas Metzler <ametzler@debian.org>  Sat, 29 Jun 2024 10:54:51 +0200
 
 libksba (1.6.6-1) unstable; urgency=medium
 
