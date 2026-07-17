@@ -11,8 +11,8 @@ Build-Depends:
  libgpg-error-dev (>= 1.46),
  texinfo,
 Build-Depends-Indep:
- libgpg-error-mingw-w64-dev,
- mingw-w64,
+ libgpg-error-mingw-w64-dev [!sw64],
+ mingw-w64 [!sw64],
 Rules-Requires-Root: no
 Standards-Version: 4.6.2
 Vcs-Browser: https://salsa.debian.org/gnutls-team/libksba
