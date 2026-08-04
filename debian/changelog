@@ -1,3 +1,10 @@
+libksba (1.6.7-2deepin1) unstable; urgency=medium
+
+  [ lichenggang ]
+  * Add loong64 support.
+
+ -- lichenggang <lichenggang@uniontech.com>  Tue, 04 Aug 2026 14:00:00 +0800
+
 libksba (1.6.7-2) unstable; urgency=medium
 
   [ lichenggang ]
