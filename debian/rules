@@ -15,8 +15,11 @@ override_dh_auto_configure:
 ifeq ($(DEB_HOST_ARCH), sw64)
 	: > debian/libksba-mingw-w64-dev.install
 endif
+ifeq ($(DEB_HOST_ARCH), loong64)
+	: > debian/libksba-mingw-w64-dev.install
+endif
 
-ifeq (,$(filter sw64, $(DEB_HOST_ARCH)))
+ifeq (,$(filter sw64 loong64, $(DEB_HOST_ARCH)))
 ### "arch-independent" Windows builds: ###
 
 WIN_FLAGS=LDFLAGS="-Xlinker --no-insert-timestamp" CFLAGS="-g -Os -ffile-prefix-map=$(CURDIR)=." CPPFLAGS=
